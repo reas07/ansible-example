@@ -1,0 +1,10 @@
+---
+- name: 'Utils インストール'
+  homebrew:
+    name: '{{ item }}'
+    state: 'present'
+  with_items:
+    - 'colordiff'
+    - 'jq'
+    - 'the_silver_searcher'
+    - 'tree'

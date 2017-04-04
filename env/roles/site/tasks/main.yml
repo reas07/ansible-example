@@ -1,0 +1,7 @@
+---
+- include_vars:
+    file: '{{ env }}.yml'
+    name: 'site'
+
+- debug:
+    msg: '{{ site.kankyou }}環境に対してプレイブックを適用しています！'

@@ -1,0 +1,10 @@
+no-resolv
+no-negcache
+
+keep-in-foreground
+
+listen-address=127.0.0.1
+
+{% for domain in dnsmasq.local_domains %}
+address=/{{ domain }}/127.0.0.1
+{% endfor %}

@@ -1,0 +1,38 @@
+---
+- name: 'Dnsmasq インストール'
+  homebrew:
+    name: 'dnsmasq'
+    state: 'present'
+
+- name: 'Dnsmasq conf 配備'
+  template:
+    src: 'dnsmasq/dnsmasq.conf.j2'
+    dest: '{{ lookup("pipe", "brew --prefix") }}/etc/dnsmasq.conf'
+    group: 'admin'
+  notify: 'reload dnsmasq'
+
+- block:
+  - name: 'resolverディレクトリ 作成'
+    file:
+      path: '/etc/resolver'
+      state: 'directory'
+      owner: 'root'
+      group: 'wheel'
+
+  - name: 'resolv.conf 配備'
+    copy:
+      content: |
+        nameserver 127.0.0.1
+      dest: '/etc/resolver/{{ item }}'
+      owner: 'root'
+      group: 'wheel'
+    with_items: '{{ dnsmasq.local_domains }}'
+
+  - name: 'Dnsmasq plist 配備'
+    copy:
+      src: 'dnsmasq/kkitta.dnsmasq.plist'
+      dest: '/Library/LaunchDaemons/kkitta.dnsmasq.plist'
+      owner: 'root'
+      group: 'wheel'
+    notify: 'reload dnsmasq'
+  become: true

@@ -1,0 +1,16 @@
+---
+- name: 'ビルド環境 セットアップ'
+  debug:
+    msg: 'ビルド環境のセットアップとか'
+
+- block:  # ヘッドレス環境向け
+  - name: 'Android SDK インストール'
+    debug:
+      msg: 'Android SDKのインストールとか'
+  when: 'headless | bool'
+
+- block:  # GUI環境向け
+  - name: 'Android Studio インストール'
+    debug:
+      msg: 'Android Studioのインストールとか'
+  when: 'not (headless | bool)'

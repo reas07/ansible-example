@@ -1,0 +1,12 @@
+---
+- name: 'reload dnsmasq'
+  shell: |
+    SERVICE='kkitta.dnsmasq'
+    
+    launchctl list ${SERVICE} \
+      && launchctl unload ./${SERVICE}.plist
+    
+    launchctl load ./${SERVICE}.plist
+  args:
+    chdir: '/Library/LaunchDaemons'
+  become: true

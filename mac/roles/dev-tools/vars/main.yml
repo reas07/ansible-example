@@ -1,0 +1,6 @@
+---
+dnsmasq:
+  local_domains:
+    - 'dev'
+    - 'intra'
+    - 'kkitta'
